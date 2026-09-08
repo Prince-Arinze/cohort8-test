@@ -1,0 +1,17 @@
+{
+  "name": "database_cohort8",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --watch index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongoose": "^9.9.4"
+  },
+  "devDependencies": {},
+  "description": ""
+}
