@@ -8,14 +8,9 @@ const mongoose = require("mongoose");
 const userRoutes = require("./routes/userRoutes");
 const productRoutes = require("./routes/productRoutes");
 
-
-
 const app = express();
 
 const PORT = process.env.PORT || 8080;
-
-const dbString = "mongodb+srv://cypher:cypherTech4Lif3@cluster0.v3lsjms.mongodb.net/?appName=Cluster0";
-const compassString = "mongodb://localhost:27017/cohort8";
 
 
 app.use(express.json());
@@ -28,7 +23,7 @@ app.use("/users", userRoutes);
 
 app.use("/products", productRoutes);
 
-const dbUrl = process.env.NODE_ENV === "production" ? dbString : compassString;
+const dbUrl = process.env.NODE_ENV === "production" ? process.env.MONGO_URI : process.env.COMPASS_URI;
 
 mongoose.connect(dbUrl).then(() => {
     console.log(`Connected to MongoDB on ${dbUrl}`); 
