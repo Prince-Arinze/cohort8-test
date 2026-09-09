@@ -25,6 +25,12 @@ app.use("/products", productRoutes);
 
 const dbUrl = process.env.NODE_ENV === "production" ? process.env.MONGO_URI : process.env.COMPASS_URI;
 
+
+console.log("NODE_ENV:", process.env.NODE_ENV);
+console.log("MONGO_URI exists:", !!process.env.MONGO_URI);
+console.log("COMPASS_URI exists:", !!process.env.COMPASS_URI);
+console.log("dbUrl exists:", !!dbUrl);
+
 mongoose.connect(dbUrl).then(() => {
     console.log(`Connected to MongoDB on ${dbUrl}`); 
 }).catch((err) => {
