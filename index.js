@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 8080;
 app.use(express.json());
 
 app.get("/", (req, res) => {
-    res.send("Hello, world")
+    res.status(200).json({message: "App is running!"})
 });
 
 app.use("/users", userRoutes);
