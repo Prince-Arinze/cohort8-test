@@ -1,4 +1,5 @@
 const userModel = require("../models/UserModel");
+const bcrypt = require("bcrypt");
 
 const createUser = async (req, res) => {
     const { name, email, password } = req.body;
@@ -8,8 +9,12 @@ const createUser = async (req, res) => {
           return res.status(409).json({
             message: "A user with this email already exists"
           })
-       } 
-       const newUser = await userModel.create({ name, email, password });
+       } ;
+        
+       const genSalt = await bcrypt.genSalt(10);
+       const hashedPassword = await bcrypt.hash(password, genSalt)
+
+       const newUser = await userModel.create({ name, email, password: hashedPassword });
        res.status(201).json({
           message: `User created successfully`,
           data: newUser
@@ -20,7 +25,6 @@ const createUser = async (req, res) => {
         })
     }
 }
-
 
 const getAllUsers = async (req, res) => {
      try {
@@ -113,11 +117,41 @@ const deleteUser = async (req, res) => {
     }
 }
 
+const loginUser = async (req, res) => {
+    const {email, password} = req.body;
+    try {
+        const user = await userModel.findOne({email});
+
+        if(!user) return res.status(404).json({
+            error: true,
+            message: "User not found"
+        });
+
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        if(!passwordMatch) return res.status(401).json({
+            error: true,
+            message: "Invalid credentials"
+        });
+
+        res.status(200).json({
+            error: false,
+            message: "Login successful",
+            data: user
+        })
+
+    } catch (error) {
+        return res.status(500).json({
+            message: `Failed to login: ${error.message}`
+        })
+    }
+}
+
 
 module.exports = {
     createUser,
     getAllUsers,
     getUser,
     updateUser,
-    deleteUser
+    deleteUser, 
+    loginUser
 }

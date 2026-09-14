@@ -27,8 +27,17 @@ const productSchema = new mongoose.Schema({
     },
     productImage: {
         type: String,
+        default: ""
     },
-    
+    photoPublicId: {
+        type: String,
+        default: ""
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    }
 }, {
      timestamps: true
 });
