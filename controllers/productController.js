@@ -15,6 +15,7 @@ const uploadProduct = async (req, res) => {
     } = req.body;
 
     try {
+        // get the user
         const getUser = await userModel.findById(req.params.userId);
 
         if (!getUser) {
