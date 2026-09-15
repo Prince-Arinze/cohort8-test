@@ -133,7 +133,7 @@ const loginUser = async (req, res) => {
             message: "Invalid credentials"
         });
 
-        const {password, ...data} = user
+        const {password: _userPassword, ...data} = user
 
         res.status(200).json({
             error: false,
