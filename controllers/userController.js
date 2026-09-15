@@ -120,7 +120,7 @@ const deleteUser = async (req, res) => {
 const loginUser = async (req, res) => {
     const {email, password} = req.body;
     try {
-        const user = await userModel.findOne({email});
+        const user = await userModel.findOne({email}).select("+password");
 
         if(!user) return res.status(404).json({
             error: true,
@@ -133,12 +133,10 @@ const loginUser = async (req, res) => {
             message: "Invalid credentials"
         });
 
-        const {password: _userPassword, ...data} = user
-
         res.status(200).json({
             error: false,
             message: "Login successful",
-            data
+            data: user
         })
 
     } catch (error) {
