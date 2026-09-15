@@ -133,10 +133,13 @@ const loginUser = async (req, res) => {
             message: "Invalid credentials"
         });
 
+        const data = user.toObject();
+        delete data.password;
+
         res.status(200).json({
             error: false,
             message: "Login successful",
-            data: user
+            data
         })
 
     } catch (error) {
